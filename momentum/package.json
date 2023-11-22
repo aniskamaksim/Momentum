@@ -2,6 +2,7 @@
   "name": "momentum",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://aniskamaksim.github.io/Momentum",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -17,6 +18,7 @@
     "@types/uuid": "^9.0.0",
     "axios": "^1.6.2",
     "fs": "^0.0.1-security",
+    "gh-pages": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -29,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "deploy-gh-pages": "^1.0.0"
   }
 }
