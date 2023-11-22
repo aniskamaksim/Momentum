@@ -1,0 +1,11 @@
+input {
+    background-color: transparent;
+    font-size: 0.8em;
+    font-weight: 600;
+    outline: none;
+    border-bottom-color: white;
+    width: 6em;
+    color: white;
+    height: 1.5em;
+    margin-bottom: 10px;
+}
