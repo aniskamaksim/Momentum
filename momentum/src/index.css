@@ -7,7 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: url("./Assets/Img/bg.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
 }
 
 code {
@@ -16,4 +18,27 @@ code {
 }
 input {
   color: #00cc22;
+}
+li {
+  list-style-type: none;
+  color: #ECECEC;
+}
+.weather_todo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+.toDo {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+.svg_div {
+  width: 3rem;
+}
+@media screen and (max-width: 600px) {
+  .dateTime {
+    font-size: x-small;
+  }
 }
