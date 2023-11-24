@@ -3,22 +3,46 @@ import './App.css';
 import {DateAndTime} from "./Components/DateAndTime";
 import {Greeting} from "./Components/Greeting";
 import {QuoteBlock} from "./Components/QuoteBlock";
-type QuoteType = {
-    quote: string,
-    author: string
+import {Weather} from "./Components/Weather";
+import {ToDo} from "./Components/ToDo";
+
+export type WeatherType = {
+    sky: string,
+    temp: string,
+    human: string,
+    wind: string
 }
-function App() {
+
+function App () {
     const [date, setDate] = useState(new Date());
+    const [weather, setWeather] = useState<WeatherType[]>([
+        {
+            sky: "",
+            temp: "",
+            human: "",
+            wind: ""
+        }]
+    )
 
     return (
-        <div>
+        <>
+            <div className={"weather_todo"}>
+                <ToDo/>
+                <Weather
+                    weather={weather}
+                    setWeather={setWeather}
+                    />
+            </div>
+        <div className={"dateTime"}>
             <DateAndTime
                 date={date}
-                setDate={setDate}/>
+                setDate={setDate}
+            />
             <Greeting
                 date={date}/>
             <QuoteBlock />
         </div>
+        </>
     );
 }
 

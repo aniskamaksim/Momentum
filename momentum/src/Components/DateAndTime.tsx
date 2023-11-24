@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import styled from "styled-components";
 
 type DateAndTimeType = {
     date: Date
     setDate: (date: Date)=>void
 }
-export const DateAndTime: React.FC<DateAndTimeType> = (
-    {date, setDate}
+export const DateAndTime: React.FC<DateAndTimeType> = memo(
+    (
+        {date, setDate}
 ) => {
+        // const [date, setDate] = useState(new Date());
 
     useEffect(()=>{
         const timer = setInterval(()=>setDate(new Date()), 1000)
@@ -23,7 +25,7 @@ export const DateAndTime: React.FC<DateAndTimeType> = (
                 weekday: "long"})} </DateDiv>
         </DivWrapper>
     );
-};
+});
 const ClockDiv = styled.div`
   font-family: "Roboto", sans-serif;
   font-size: 8em;
@@ -37,7 +39,7 @@ const DateDiv = styled.div`
   color: white;
 `;
 const DivWrapper = styled.div`
-  margin-top: 12em;
+  margin-top: 3em;
   display: flex;
   flex-direction: column;
   justify-content: center;
