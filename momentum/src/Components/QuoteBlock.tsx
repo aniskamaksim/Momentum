@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import {getRandom} from "../Assets/TS/logic";
 import styled from "styled-components";
 import reload from "../Assets/Img/reload.svg";
@@ -6,7 +6,6 @@ import axios from "axios";
 
 export type QuoteBlockType = {}
 export const QuoteBlock: React.FC<QuoteBlockType> = memo((
-    {}
 ) => {
     const [quote, setQuote] = useState("");
     const [author, setAuthor] = useState("");
@@ -22,12 +21,13 @@ export const QuoteBlock: React.FC<QuoteBlockType> = memo((
         setAuthor(currAuthor);
     };
 
-    const changeResult = () => {
+    const changeResult = useCallback(() => {
         return fetchQuote();
-    }
+    }, [])
+
     useEffect(() => {
         changeResult();
-    }, [])
+    }, [changeResult])
     return (
         <>
             <ImgDiv><img className={"svg_div"} src={reload} alt="Your SVG here" onClick={() => changeResult()}/></ImgDiv>
