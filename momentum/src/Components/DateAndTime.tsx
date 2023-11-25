@@ -9,8 +9,7 @@ export const DateAndTime: React.FC<DateAndTimeType> = memo(
     (
         {date, setDate}
 ) => {
-        // const [date, setDate] = useState(new Date());
-
+    
     useEffect(()=>{
         const timer = setInterval(()=>setDate(new Date()), 1000)
         return ()=> clearInterval(timer)

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, memo, useState, KeyboardEvent, useCallback} from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import {TextField} from "@mui/material";
@@ -38,11 +38,11 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         setIcon(iconUrl);
     }
 
-    const changeWeatherHolder = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeWeatherHolder = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let cityString = e.currentTarget.value;
         setCity(cityString)
         setInputValue(cityString)
-    }
+    },[city])
 
     const onClickHandler = () => {
         getWeather(city);
