@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useState, KeyboardEvent, useCallback} from 'react';
+import React, {ChangeEvent, memo, useState, KeyboardEvent, useCallback, useEffect} from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import {TextField} from "@mui/material";
@@ -13,20 +13,36 @@ type WeatherType = {
 }
 type WeatherPropsType = {
     weather: WeatherType[],
-    setWeather: (weather: WeatherType[])=>void
+    setWeather: (weather: WeatherType[])=>void,
+    city: string,
+    setCity: (city: string)=>void
 }
 export const Weather: React.FC<WeatherPropsType> = memo((
-    {weather, setWeather}
+    {weather, setWeather, city, setCity}
 ) => {
-    const [city, setCity] = useState<string>("Weather")
+
     const [icon, setIcon] = useState<string>("")
     const [inputValue, setInputValue] = useState<string>("")
 
+        //TODO: show city weather from localStorage on reload. Now just by click on button
+
+    const setLocaleStorage = (nameParam: string) => {
+        localStorage.setItem('city', nameParam)
+    }
+    const localStoredName = localStorage.getItem('city')
+    useEffect(() => {
+        setCity(localStoredName ? localStoredName : "")
+    }, [city, setCity, localStoredName])
+    useEffect(()=>{
+            getWeather(city)
+    }, [city])
+
     async function getWeather(city: string) {
-        let cityString = `${city}`
+        const localStoredName = localStorage.getItem('city')
+        const cityString = localStoredName ? `${localStoredName}` : `${city}`;
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityString}&lang=en&appid=7e3f19a944493dfca234ed69199dfbf1&units=metric`;
         const res = await axios(url);
-        console.log(res)
+        // console.log(res)
         const currTemp = "TEMP: " + res.data.main.temp + "C";
         const currHumidity = "HUMID: " + res.data.main.humidity + "%";
         const currWind = "WIND: " + res.data.wind.speed + "ms";
@@ -42,7 +58,8 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         let cityString = e.currentTarget.value;
         setCity(cityString)
         setInputValue(cityString)
-    },[city])
+        setLocaleStorage(cityString)
+    },[setCity])
 
     const onClickHandler = () => {
         getWeather(city);
@@ -58,9 +75,8 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         <>
             <LiDiv>
                 <InputButton>
-                    {/*//TODO: focused input. Check it out*/}
                     <TextField
-                        color="secondary"
+                        color= "primary"
                         id="outlined-basic"
                         label={"Please enter city here"}
                         variant="outlined"
