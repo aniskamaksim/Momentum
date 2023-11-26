@@ -16,15 +16,15 @@ export const EditableSpan: React.FC = memo(() => {
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         let newName = e.currentTarget.value
         console.log(newName, name)
-        if(newName.trim().length == 0) {
+        if (!newName.trim().length) {
             setName("[ENTER NAME]")
         } else {
             setName(newName);
             setLocaleStorage(newName)
         }
     }
-    const enterEnterKey = (e: KeyboardEvent)=> {
-        if(e.key === "Enter") {
+    const enterEnterKey = (e: KeyboardEvent) => {
+        if (e.key === "Enter") {
             setEditMode(false);
         }
     }
