@@ -13,9 +13,9 @@ type WeatherType = {
 }
 type WeatherPropsType = {
     weather: WeatherType[],
-    setWeather: (weather: WeatherType[])=>void,
+    setWeather: (weather: WeatherType[]) => void,
     city: string,
-    setCity: (city: string)=>void
+    setCity: (city: string) => void
 }
 export const Weather: React.FC<WeatherPropsType> = memo((
     {weather, setWeather, city, setCity}
@@ -24,8 +24,6 @@ export const Weather: React.FC<WeatherPropsType> = memo((
     const [icon, setIcon] = useState<string>("")
     const [inputValue, setInputValue] = useState<string>("")
 
-        //TODO: show city weather from localStorage on reload. Now just by click on button
-
     const setLocaleStorage = (nameParam: string) => {
         localStorage.setItem('city', nameParam)
     }
@@ -33,8 +31,8 @@ export const Weather: React.FC<WeatherPropsType> = memo((
     useEffect(() => {
         setCity(localStoredName ? localStoredName : "")
     }, [city, setCity, localStoredName])
-    useEffect(()=>{
-            getWeather(city)
+    useEffect(() => {
+        getWeather(city)
     }, [city])
 
     async function getWeather(city: string) {
@@ -47,7 +45,7 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         const currHumidity = "HUMID: " + res.data.main.humidity + "%";
         const currWind = "WIND: " + res.data.wind.speed + "ms";
         const currSky = res.data.weather[0].description;
-        let copyWeather = weather.map(e=>({...e, sky: currSky, temp: currTemp, wind: currWind, human: currHumidity}))
+        let copyWeather = weather.map(e => ({...e, sky: currSky, temp: currTemp, wind: currWind, human: currHumidity}))
         setWeather(copyWeather);
         const iconId = res.data.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/w/${iconId}.png`;
@@ -59,7 +57,7 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         setCity(cityString)
         setInputValue(cityString)
         setLocaleStorage(cityString)
-    },[setCity])
+    }, [setCity])
 
     const onClickHandler = () => {
         getWeather(city);
@@ -76,7 +74,7 @@ export const Weather: React.FC<WeatherPropsType> = memo((
             <LiDiv>
                 <InputButton>
                     <TextField
-                        color= "primary"
+                        color="primary"
                         id="outlined-basic"
                         label={"Please enter city here"}
                         variant="outlined"

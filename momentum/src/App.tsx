@@ -5,7 +5,6 @@ import {Greeting} from "./Components/Greeting";
 import {QuoteBlock} from "./Components/QuoteBlock";
 import {Weather} from "./Components/Weather";
 import {ToDo} from "./Components/ToDo";
-import {v1} from "uuid";
 
 export type WeatherType = {
     sky: string,
@@ -24,16 +23,18 @@ function App() {
     const [weather, setWeather] = useState<WeatherType[]>(
         [{sky: "", temp: "", human: "", wind: ""}]
     )
+    const [city, setCity] = useState<string>("Weather")
+    // @ts-ignore
+    const localStoredName = JSON.parse(localStorage.getItem('tasks'))
     const [tasks, setTasks] = useState<TasksType[]>(
-        [
-            {taskId: v1(), taskTitle: "FirstTask", taskStatus: false}
-        ]
+        localStoredName ? localStoredName : []
     )
+    localStorage.setItem('tasks', JSON.stringify(tasks))
     return (
         <>
             <div className={"weather_todo"}>
                 <ToDo tasks={tasks} setTasks={setTasks}/>
-                <Weather weather={weather} setWeather={setWeather}/>
+                <Weather weather={weather} setWeather={setWeather} city={city} setCity={setCity}/>
             </div>
             <div className={"dateTime"}>
                 <DateAndTime date={date} setDate={setDate}/>
@@ -43,4 +44,5 @@ function App() {
         </>
     );
 }
+
 export default App;
