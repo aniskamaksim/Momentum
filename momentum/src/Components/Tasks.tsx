@@ -67,28 +67,29 @@ export const Tasks: React.FC<TasksPropsType> = (
                     onChange={onChangeStatusHandler}
                     inputProps={{'aria-label': 'controlled'}}
                 />
-                <IconButton aria-label="delete" size="small">
-                    <DeleteIcon fontSize={"medium"} color={"primary"} onClick={deleteTaskHandler}/>
+                <IconButton aria-label="delete" size="small" onClick={deleteTaskHandler}>
+                    <DeleteIcon fontSize={"medium"} color={"primary"}/>
                 </IconButton>
             </TaskButtons>
         </TasksList>
     )
 };
-const TasksList = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 20rem;
-  color: #F0F0F0;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
+    const TasksList = styled.div`
+        display: flex;
+        flex-direction: row;
+        width: 20rem;
+        color: #F0F0F0;
+        font-size: 1.2rem;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
 `
-const TaskRow = styled.div`
-  width: 100%;
-  display: flex;
-`
-const TaskButtons = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
+    const TaskRow = styled.div`
+        width: 100%;
+        display: flex;
+    `
+    const TaskButtons = styled.div`
+        width: 100%;
+        display: flex;
+        flex-direction: row;
 `

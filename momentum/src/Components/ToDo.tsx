@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, memo, useState, KeyboardEvent, useEffect} from 'react';
 import {Tasks} from "./Tasks";
 import {v1} from "uuid";
 import {TasksType} from "../App";
@@ -14,17 +14,20 @@ export const ToDo: React.FC<TodoPropsType> = memo((
 ) => {
     const [title, setTitle] = useState<string>("");
     const [textFieldValue, setTextFieldValue] = useState<string>("");
+
     const changeTasksStatus = (taskId: string, newTaskStatus: boolean) => {
         setTasks(tasks.map(e => e.taskId === taskId ? {...e, taskStatus: newTaskStatus} : e));
     }
+
     const addNewTask = (newTaskTitle: string) => {
         const newTask = {taskId: v1(), taskTitle: newTaskTitle, taskStatus: false};
         let copyTasks = [...tasks, newTask];
         setTasks(copyTasks);
     }
     const createTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTextFieldValue(e.currentTarget.value);
-        setTitle(textFieldValue)
+        const value = e.currentTarget.value
+        setTextFieldValue(value);
+        setTitle(value)
     }
     const onPressCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && textFieldValue.trim().length) {
@@ -58,7 +61,6 @@ export const ToDo: React.FC<TodoPropsType> = memo((
                     To Do
                 </Button>
             </InputButtonTodo>
-
             <TasksList>{tasks.length ?
                 <div>
                     {tasks.map(e =>
