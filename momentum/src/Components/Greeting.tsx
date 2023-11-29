@@ -1,6 +1,7 @@
 import React, {memo, useCallback} from 'react';
 import styled from "styled-components";
 import {EditableSpan} from "./EditableSpan";
+import {getTimeOfTheDay} from "../Assets/TS/logic";
 
 type GreetingType = {
     date: Date;
@@ -8,17 +9,14 @@ type GreetingType = {
 export const Greeting: React.FC<GreetingType> = memo((
     {date}
 ) => {
-    const getTimeOfTheDay = useCallback(() => {
-        const hours = date.getHours();
-        return hours >= 0 && hours < 6 ? 'night' :
-            hours >= 6 && hours < 12 ? 'morning' :
-                hours >= 12 && hours < 18 ? 'afternoon' : 'evening';
+    useCallback(() => {
+        getTimeOfTheDay(date)
     }, [date]);
 
     const showGreetings = useCallback(() => {
-        const nowIs = getTimeOfTheDay();
+        const nowIs = getTimeOfTheDay(date);
         return `Good ${nowIs}, `
-    }, [getTimeOfTheDay]);
+    }, [date]);
 
     return (
         <DivWrapper>
