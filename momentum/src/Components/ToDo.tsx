@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useState, KeyboardEvent, useEffect} from 'react';
+import React, {ChangeEvent, memo, useState, KeyboardEvent} from 'react';
 import {Tasks} from "./Tasks";
 import {v1} from "uuid";
 import {TasksType} from "../App";
@@ -18,7 +18,6 @@ export const ToDo: React.FC<TodoPropsType> = memo((
     const changeTasksStatus = (taskId: string, newTaskStatus: boolean) => {
         setTasks(tasks.map(e => e.taskId === taskId ? {...e, taskStatus: newTaskStatus} : e));
     }
-
     const addNewTask = (newTaskTitle: string) => {
         const newTask = {taskId: v1(), taskTitle: newTaskTitle, taskStatus: false};
         let copyTasks = [...tasks, newTask];
@@ -40,24 +39,25 @@ export const ToDo: React.FC<TodoPropsType> = memo((
         setTasks(copyTask)
     }
     const editTaskTitle = (taskId: string, newTaskTitle: string) => {
-        tasks.filter(e => e.taskId === taskId ? {...e, taskTitle: newTaskTitle} : e)
-        setTasks(tasks)
+        const copyTasks = tasks.map(e => e.taskId === taskId ? {...e, taskTitle: newTaskTitle} : e)
+        setTasks(copyTasks);
     }
-
     //TODO: edit task Title /editable span already exist?
-
     return (
         <MainTodoDiv>
             <InputButtonTodo>
                 <TextField onChange={createTaskHandler}
                            onKeyDown={onPressCreateTaskHandler}
-                           size={"small"}
+                           id={"outlined-basic"}
+                           placeholder={"Enter tasks here"}
+                           variant={"standard"}
+                           inputProps={inputPropsStyle}
                            value={textFieldValue}
                            sx={{padding: "0.3rem"}}
                 />
                 <Button variant="contained"
                         onClick={() => addNewTask(title)}
-                        size={"small"}>
+                        size={"medium"}>
                     To Do
                 </Button>
             </InputButtonTodo>
@@ -76,11 +76,13 @@ export const ToDo: React.FC<TodoPropsType> = memo((
         </MainTodoDiv>
     )
 });
+const inputPropsStyle = {
+    style: {padding: "0.3rem", width: "15rem", color: "white", fontSize: "1.5rem", fontWeight: "300"}
+};
 const MainTodoDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
 `
 const InputButtonTodo = styled.div`
   display: flex;
@@ -91,7 +93,7 @@ const InputButtonTodo = styled.div`
 `
 const TasksList = styled.div`
   display: flex;
-  width: 50%;
+  width: 70%;
   flex-direction: row;
   padding: 0.5rem;
 `

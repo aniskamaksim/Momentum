@@ -1,49 +1,44 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useEffect, useState} from 'react';
-import "./Greeting.css"
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from 'react';
+import TextField from "@mui/material/TextField";
 
-export const EditableSpan: React.FC = memo(() => {
-    const [name, setName] = useState('[ENTER NAME]');
-    let [editMode, setEditMode] = useState(false);
+export const EditableSpan: React.FC = () => {
 
-    const setLocaleStorage = (nameParam: string) => {
-        localStorage.setItem('name', nameParam)
-    }
+    const [name, setName] = useState('');
+    const [editMode, setEditMode] = useState(false);
+    const localStoredName = localStorage.getItem('name')
+
     useEffect(() => {
-        const localStoredName = localStorage.getItem('name')
-        setName(localStoredName ? localStoredName : "[ENTER PLS]")
-    }, [])
+        localStoredName !== null && localStoredName ?
+            setName(localStoredName) : setName("enter your name, pls");
+    }, [name, localStoredName])
 
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        let newName = e.currentTarget.value
-        console.log(newName, name)
-        if (!newName.trim().length) {
-            setName("[ENTER NAME]")
-        } else {
-            setName(newName);
-            setLocaleStorage(newName)
+    const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value);
+        localStorage.setItem('name', e.currentTarget.value);
+    }
+    const onKeyDownHandler = (e: KeyboardEvent) => {
+        if (e.key === "Enter" && name.trim().length) {
+            toggleEditMode();
         }
     }
-    const enterEnterKey = (e: KeyboardEvent) => {
-        if (e.key === "Enter") {
-            setEditMode(false);
-        }
+    const toggleEditMode = () => {
+        editMode ? setEditMode(false) : setEditMode(true);
     }
-
-    const activateEditMode = () => {
-        setEditMode(true);
-        setName("");
-    }
-    const activateViewMode = () => {
-        setEditMode(false);
-    }
-
-    return editMode ? <input
+    return editMode ? <TextField
+            id={"outlined-basic"}
             type={"text"}
-            value={name}
-            onChange={changeTitle}
-            onKeyDown={enterEnterKey}
-            autoFocus onBlur={activateViewMode}
+            color={"primary"}
+            variant={"standard"}
+            size={"small"}
+            inputProps={inputPropsStyle}
+            value={localStoredName ? name : ""}
+            onChange={onChangeNameHandler}
+            onKeyDown={onKeyDownHandler}
+            autoFocus onBlur={toggleEditMode}
         /> :
-        <span onDoubleClick={activateEditMode}>{name}</span>
+        <span onDoubleClick={toggleEditMode}>{name}{"."}</span>
 
-});
+};
+const inputPropsStyle = {
+    style: {width: "15rem", color: "white", fontSize: "2rem", fontWeight: "bold"}
+};

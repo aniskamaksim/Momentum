@@ -4,14 +4,12 @@ import styled from "styled-components";
 import reload from "../Assets/Img/reload.svg";
 import axios from "axios";
 
-export type QuoteBlockType = {}
-export const QuoteBlock: React.FC<QuoteBlockType> = memo((
-) => {
+export const QuoteBlock: React.FC = memo(() => {
     const [quote, setQuote] = useState("");
     const [author, setAuthor] = useState("");
 
     const fetchQuote = async () => {
-        let randomNum = getRandom(1, 102);
+        const randomNum = getRandom(1, 102);
         const result = await axios(
             'https://gist.githubusercontent.com/nasrulhazim/54b659e43b1035215cd0ba1d4577ee80/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json',
         );
@@ -30,12 +28,23 @@ export const QuoteBlock: React.FC<QuoteBlockType> = memo((
     }, [changeResult])
     return (
         <>
-            <ImgDiv><img className={"svg_div"} src={reload} alt="Your SVG here" onClick={() => changeResult()}/></ImgDiv>
-            <QuoteDiv>{quote}</QuoteDiv>
-            <AuthorDiv>{author}</AuthorDiv>
+            <QuoteBlockDiv>
+                <ImgDiv><img className={"svg_div"}
+                             src={reload}
+                             alt="Your SVG here"
+                             onClick={() => changeResult()}/>
+                </ImgDiv>
+                <QuoteDiv>{quote}</QuoteDiv>
+                <AuthorDiv>{author}</AuthorDiv>
+            </QuoteBlockDiv>
         </>
     );
 });
+const QuoteBlockDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+`;
 const ImgDiv = styled.div`
   display: flex;
   align-content: center;
