@@ -1,17 +1,16 @@
 {
   "files": {
-    "main.css": "/Momentum/static/css/main.296a617b.css",
-    "main.js": "/Momentum/static/js/main.1bd5aa30.js",
+    "main.css": "/Momentum/static/css/main.b847807d.css",
+    "main.js": "/Momentum/static/js/main.8198a107.js",
     "static/js/787.a88eb028.chunk.js": "/Momentum/static/js/787.a88eb028.chunk.js",
-    "static/media/bg.jpg": "/Momentum/static/media/bg.1ec547d73dd0ce35a063.jpg",
     "index.html": "/Momentum/index.html",
     "static/media/reload.svg": "/Momentum/static/media/reload.91f316184109e60f0bafdda13b8deb28.svg",
-    "main.296a617b.css.map": "/Momentum/static/css/main.296a617b.css.map",
-    "main.1bd5aa30.js.map": "/Momentum/static/js/main.1bd5aa30.js.map",
+    "main.b847807d.css.map": "/Momentum/static/css/main.b847807d.css.map",
+    "main.8198a107.js.map": "/Momentum/static/js/main.8198a107.js.map",
     "787.a88eb028.chunk.js.map": "/Momentum/static/js/787.a88eb028.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.296a617b.css",
-    "static/js/main.1bd5aa30.js"
+    "static/css/main.b847807d.css",
+    "static/js/main.8198a107.js"
   ]
 }
