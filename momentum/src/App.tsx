@@ -33,7 +33,7 @@ function App() {
         localStorage.setItem('tasks', JSON.stringify(tasks))
     }, [tasks])
     useEffect(() => {
-        setBg()
+        setBg();
     }, [])
     return (
         <>
