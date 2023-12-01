@@ -20,16 +20,16 @@ export const ToDo: React.FC<TodoPropsType> = memo((
     }
     const addNewTask = (newTaskTitle: string) => {
         const newTask = {taskId: v1(), taskTitle: newTaskTitle, taskStatus: false};
-        let copyTasks = [...tasks, newTask];
+        let copyTasks = [newTask, ...tasks];
         setTasks(copyTasks);
     }
     const createTaskHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
-        setTextFieldValue(value);
-        setTitle(value)
+        setTextFieldValue(value)
+        setTitle(value);
     }
     const onPressCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && textFieldValue.trim().length) {
+        if (e.key === "Enter" && title.trim().length) {
             addNewTask(title);
             setTextFieldValue("");
         }
@@ -39,9 +39,8 @@ export const ToDo: React.FC<TodoPropsType> = memo((
         setTasks(copyTask)
     }
     const editTaskTitle = (taskId: string, newTaskTitle: string) => {
-        const copyTasks = tasks.map(e => e.taskId === taskId ? {...e, taskTitle: newTaskTitle} : e)
-        setTasks(copyTasks);
-    }
+        setTasks(tasks.map(e => e.taskId === taskId ? {...e, taskTitle: newTaskTitle} : e));
+            }
     //TODO: edit task Title /editable span already exist?
     return (
         <MainTodoDiv>

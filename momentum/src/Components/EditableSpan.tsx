@@ -13,16 +13,20 @@ export const EditableSpan: React.FC = () => {
     }, [name, localStoredName])
 
     const onChangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setName(e.currentTarget.value);
+        const newName = e.currentTarget.value;
+        setName(newName);
         localStorage.setItem('name', e.currentTarget.value);
     }
     const onKeyDownHandler = (e: KeyboardEvent) => {
-        if (e.key === "Enter" && name.trim().length) {
-            toggleEditMode();
-        }
+        e.key === "Enter" && toggleEditMode();
     }
     const toggleEditMode = () => {
-        editMode ? setEditMode(false) : setEditMode(true);
+        if (name.trim().length) {
+            setEditMode(!editMode)
+        } else {
+            setName("enter your name, pls");
+            setEditMode(!editMode);
+        }
     }
     return editMode ? <TextField
             id={"outlined-basic"}
