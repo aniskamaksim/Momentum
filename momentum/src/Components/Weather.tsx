@@ -15,6 +15,8 @@ export const Weather: React.FC<WeatherPropsType> = memo((
 ) => {
     const [icon, setIcon] = useState<string>("")
     const [inputValue, setInputValue] = useState<string>("")
+    const [error, setError] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string>("")
     const localStoredName = localStorage.getItem('city')
 
     useEffect(() => {
@@ -25,8 +27,9 @@ export const Weather: React.FC<WeatherPropsType> = memo((
         const localStoredName = localStorage.getItem('city')
         const cityString = localStoredName ? `${localStoredName}` : `${city}`;
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityString}&lang=en&appid=7e3f19a944493dfca234ed69199dfbf1&units=metric`;
-        const res = await axios(url);
         try {
+            const res = await axios(url);
+            setError(false);
             const currTemp = "TEMP: " + res.data.main.temp + "C";
             const currHumidity = "HUMID: " + res.data.main.humidity + "%";
             const currWind = "WIND: " + res.data.wind.speed + "ms";
@@ -42,8 +45,19 @@ export const Weather: React.FC<WeatherPropsType> = memo((
             const iconId = res.data.weather[0].icon;
             const iconUrl = `https://openweathermap.org/img/w/${iconId}.png`;
             setIcon(iconUrl);
-        } catch (err) {
-            new Error("Enter correct city")
+        } catch (err: any) {
+            if (err) {
+                setError(true);
+                setErrorMessage(JSON.stringify(err.response.data.message).slice(1, -1));
+                let copyWeather = weather.map(e => ({
+                    ...e,
+                    sky: "",
+                    temp: "",
+                    wind: "",
+                    human: ""
+                }))
+                setWeather(copyWeather);
+            }
         }
     }
 
@@ -58,7 +72,14 @@ export const Weather: React.FC<WeatherPropsType> = memo((
             setInputValue("");
         }
     }
-    const cityName = localStoredName ? localStoredName : "Weather";
+    const setCityName = () => {
+        if (!error) {
+            return localStoredName ? localStoredName : "Weather";
+        } else {
+            return !localStoredName ? "Weather" : errorMessage;
+        }
+    }
+    const cityName = setCityName();
     return (
         <>
             <LiDiv>
@@ -81,7 +102,7 @@ export const Weather: React.FC<WeatherPropsType> = memo((
                     weather.map((e) => {
                         return (
                             <div key={1}>
-                                {icon !== "" ? <img src={icon} alt={"icon weather"}/> : ""}
+                                {!error ? <img src={icon} alt={"icon weather"}/> : ""}
                                 <li>{e.sky}</li>
                                 <li>{e.temp}</li>
                                 <li>{e.wind}</li>

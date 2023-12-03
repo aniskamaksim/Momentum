@@ -40,7 +40,7 @@ export const ToDo: React.FC<TodoPropsType> = memo((
     }
     const editTaskTitle = (taskId: string, newTaskTitle: string) => {
         setTasks(tasks.map(e => e.taskId === taskId ? {...e, taskTitle: newTaskTitle} : e));
-            }
+    }
     //TODO: edit task Title /editable span already exist?
     return (
         <MainTodoDiv>
