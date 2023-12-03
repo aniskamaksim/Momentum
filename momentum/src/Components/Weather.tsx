@@ -55,7 +55,7 @@ export const Weather: React.FC<WeatherPropsType> = memo((
                     temp: "",
                     wind: "",
                     human: ""
-                }))
+                }));
                 setWeather(copyWeather);
             }
         }
